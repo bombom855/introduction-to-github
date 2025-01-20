@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Nilai</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Animasi untuk efek membuka aplikasi */
+        @keyframes slideIn {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Mengatur tampilan secara umum */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0c9651;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Container untuk isi halaman dengan animasi masuk */
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        /* Gaya input dan tombol */
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            width: 80%;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Gambar header */
+        #header-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Gambar hasil */
+        #result-image {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            border-radius: 50%;
+        }
+
+        /* Hasil nilai */
+        #hasil {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Animasi background color */
+        @keyframes backgroundColorChange {
+            0% { background-color: #0c9651; }
+            100% { background-color: #388E3C; }
+        }
+
+        /* Tombol refresh atau kembali */
+        .button-container {
+            margin-top: 20px;
+        }
+        
+        .button-container button {
+            background-color: #FF5722;
+        }
+
+        .button-container button:hover {
+            background-color: #D84315;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Cek Nilai Ujian</h1>
+
+        <img id="header-image" src="c:\Users\Muhamad Risqi Aditya\Downloads\LOGO-UNSIL-300x300.png" alt="Gambar Ujian" />
+
+        <p>Masukkan nama Anda:</p>
+        <input type="text" id="nama" placeholder="Masukkan Nama" />
+
+        <p>Masukkan nilai ujian Anda:</p>
+        <input type="number" id="nilai" placeholder="Masukkan Nilai" />
+        <button onclick="cekNilai()">Cek Nilai</button>
+
+        <div id="hasil"></div>
+
+        <img id="result-image" src="" alt="Gambar Hasil" style="display:none;" />
+
+        <!-- Tombol untuk reset atau kembali -->
+        <div class="button-container">
+            <button onclick="resetForm()">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk mengecek nilai ujian
+        function cekNilai() {
+            const nama = document.getElementById("nama").value;
+            const nilai = document.getElementById("nilai").value;
+            const hasil = document.getElementById("hasil");
+            const resultImage = document.getElementById("result-image");
+
+            if (nama === "" || nilai === "" || isNaN(nilai)) {
+                hasil.innerHTML = "Mohon masukkan nama dan nilai yang valid!";
+                hasil.style.color = "red";
+                resultImage.style.display = "none";
+                return;
+            }
+
+            const angkaNilai = parseInt(nilai);
+            let message = `${nama}, `;
+            let imageSrc = "";
+
+            if (angkaNilai >= 90) {
+                message += "Nilai Anda: A (Sangat Memuaskan)";
+                hasil.style.color = "green";
+                imageSrc = "https://via.placeholder.com/100x100/4CAF50/FFFFFF?text=A";
+            } else if (angkaNilai >= 80) {
+                message += "Nilai Anda: B (Memuaskan)";
+                hasil.style.color = "blue";
+                imageSrc = "https://via.placeholder.com/100x100/2196F3/FFFFFF?text=B";
+            } else if (angkaNilai >= 70) {
+                message += "Nilai Anda: C (Cukup)";
+                hasil.style.color = "orange";
+                imageSrc = "https://via.placeholder.com/100x100/FF9800/FFFFFF?text=C";
+            } else if (angkaNilai >= 60) {
+                message += "Nilai Anda: D (Kurang)";
+                hasil.style.color = "red";
+                imageSrc = "https://via.placeholder.com/100x100/F44336/FFFFFF?text=D";
+            } else {
+                message += "Nilai Anda: E (Gagal)";
+                hasil.style.color = "darkred";
+                imageSrc = "https://via.placeholder.com/100x100/D32F2F/FFFFFF?text=E";
+            }
+
+            hasil.innerHTML = message;
+            resultImage.src = imageSrc;
+            resultImage.style.display = "block";
+        }
+
+        // Fungsi untuk mereset form
+        function resetForm() {
+            document.getElementById("nama").value = "";
+            document.getElementById("nilai").value = "";
+            document.getElementById("hasil").innerHTML = "";
+            document.getElementById("result-image").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
